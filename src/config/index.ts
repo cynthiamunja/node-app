@@ -18,3 +18,13 @@ export const sqlConfig = {
         trustServerCertificate: true, // change to true for local dev / self-signed certs
     },
 };
+
+export const smtpConfig = {
+    host:"smtp.gmail.com",
+    service:"gmail",
+    port:587,
+    auth:{
+        user:process.env.EMAIL,
+        pass:process.env.PASS
+    }
+};

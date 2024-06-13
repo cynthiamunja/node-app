@@ -10,41 +10,43 @@ import jwt from 'jsonwebtoken'
 import path from 'path';
 import dotenv from 'dotenv';
 import { DbHelper } from '../DataBaseHelper'
+import { sendRegistrationEmail } from '../utils/email';
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 
 const dbInstance = new DbHelper()
-export const registerUser = async(req:Request, res:Response)=>{
-   try{
-    const id=uid()
-    const{UserName, Email, UserPassword}=req.body
 
-    const pool= await mssql.connect(sqlConfig)
+export const registerUser = async (req: Request, res: Response) => {
+    try {
+        const id = uid();
+        const { UserName, Email, UserPassword } = req.body;
 
-    const{error}=RegisterSchema.validate(req.body)
-    if (error){
-      res.status(400).json(error)
-      console.log(error);
-      
-     }
-    const HashPassword= await Bcrypt.hash(UserPassword, 10)
+        // Validate request body against schema
+        const { error } = RegisterSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.message });
+        }
 
-    await dbInstance.exec('AddUsers', {UserID:id, UserName,Email, UserPassword:HashPassword})
-    //make a request
-//     await pool.request()
-//    // UserID
-//    .input("UserID",id)
-//     .input("UserName",UserName)
-//     .input("Email",Email)
-//     .input("UserPassword",HashPassword)
-//     .execute('AddUsers')
+        // Validate password against pattern
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+        if (!passwordRegex.test(UserPassword)) {
+            return res.status(400).json({ message: "Password must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 8 characters long." });
+        }
 
-    res.status(201).json({message:"user Created"})
+        const HashPassword = await Bcrypt.hash(UserPassword, 10);
+
+        // Insert user into database
+        await dbInstance.exec('AddUsers', { UserID: id, UserName, Email, UserPassword: HashPassword });
+
+        // Send registration email to the user
+        await sendRegistrationEmail(Email, UserName);
+
+        res.status(201).json({ message: "User Created" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
-    catch (error){
-        return res.status(500).json(error)
-}
-}
+};
 
 export const login=async(req:Request, res:Response)=>{
     try{

@@ -57,13 +57,13 @@ DELETE http://localhost:3000/Products/584ffb52-f97a-4ec2-8f25-f31782acc523
 
 
 #########
-POST http://localhost:3000/register
+POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-    "UserName": "Cynthia",
+    "UserName": "cynthia",
     "Email":"cynthiamunja@gmail.com",
-    "UserPassword":"1234"
+    "UserPassword":"P@ssw0rd1"
 }
 #########
 
@@ -72,8 +72,8 @@ Content-Type: application/json
 
 {
   
-    "Email":"john3@gmail.com",
-    "UserPassword":"123456"
+    "Email":"cynthiamunja@gmail.com",
+    "UserPassword":"1234"
 }
 #########
 
