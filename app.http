@@ -1,0 +1,84 @@
+GET http://localhost:3000/Categories
+
+#######
+
+POST http://localhost:3000/Categories
+Content-Type: application/json
+
+{
+    "CategoryName": "phones"
+}
+
+#########
+GET http://localhost:3000/Categories/abe18514-1735-4f2d-9219-9bc3c56b0616
+
+#########
+DELETE http://localhost:3000/Categories/abe18514-1735-4f2d-9219-9bc3c56b0616
+
+#########
+PUT http://localhost:3000/Categories/76aff57e-a765-46d1-9553-2face1650e59
+Content-Type: application/json
+
+{
+    "CategoryName": "newphones"
+}
+
+#######
+
+POST http://localhost:3000/Products
+Content-Type: application/json
+
+{
+    "ProductName": "green 2 ltr bottle",
+    "ProductPrice":900,
+    "CategoryID":"abe18514-1735-4f2d-9219-9bc3c56b0616"
+}
+
+######
+GET http://localhost:3000/Products
+
+#########
+GET http://localhost:3000/Products/e665db41-59fa-4f94-afd4-230a6223263e
+
+#########
+
+PUT http://localhost:3000/Products/e665db41-59fa-4f94-afd4-230a6223263e
+Content-Type: application/json
+
+{
+    "ProductName": "samsung A51",
+    "CategoryID":"76aff57e-a765-46d1-9553-2face1650e59",
+ 
+    "ProductPrice":30000
+}
+
+#######
+DELETE http://localhost:3000/Products/584ffb52-f97a-4ec2-8f25-f31782acc523
+
+
+#########
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "UserName": "Cynthia",
+    "Email":"cynthiamunja@gmail.com",
+    "UserPassword":"1234"
+}
+#########
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  
+    "Email":"john3@gmail.com",
+    "UserPassword":"123456"
+}
+#########
+
+
+GET http://localhost:3000/Products
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiIyMzg4ZjE1OC04NmM3LTQ3ZWQtOTdiYi1iMzNhYTk3NGI0YTUiLCJVc2VyTmFtZSI6IkpvaG4iLCJpYXQiOjE3MTgyOTQ4OTYsImV4cCI6MTcxODMwMjA5Nn0.oBuZGV1s6V05flEI59typpynhNM6nU2jqiz9aiVrVl4
+
+#########
